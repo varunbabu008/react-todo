@@ -17,7 +17,38 @@ module.exports={
 
     }
     return $.isArray(todos) ? todos : []; 
+  },
+  filterTodos: function(todos, showCompleted,searchText){
+    var filteredTodos = todos;
 
+    // filter by showcompleted
 
+    filteredTodos = filteredTodos.filter((todo) =>{
+      return !todo.completed || showCompleted;
+
+    });
+
+    //filter by searchText
+    filteredTodos = filteredTodos.filter((todo) =>{
+      var text = todo.text.toLowerCase();
+      return searchText.length === 0 || text.indexOf(searchText) > -1  ;
+    });
+
+    //Sort todos with noncompleted first. Function return -1 if a is to come before b
+    // 1 if b is to come before a and 0 if no change
+    filteredTodos.sort((a,b) =>{
+      if(!a.completed && b.completed){
+        return -1;
+      }
+      else if(a.completed && !b.completed){
+        return 1;
+      }
+      else{
+        return 0;
+      }
+    })
+    return filteredTodos; 
   }
+
+
 };
