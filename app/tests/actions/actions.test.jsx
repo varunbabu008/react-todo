@@ -30,7 +30,7 @@ describe('Actions',()=>{
     expect(res).toEqual(action);
   });
 
-  it('should toggle todo',()=>{
+  it('should generate toggle todo action',()=>{
     var action = {
       type: 'TOGGLE_TODO',
       id: 1
