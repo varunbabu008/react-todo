@@ -15,10 +15,11 @@ export var toggleShowCompleted = ()=>{
   };
 };
 
-export var toggleTodo = (id)=>{
+export var updateTodo = (id,updates)=>{
   return{
-    type:'TOGGLE_TODO',
-    id
+    type:'UPDATE_TODO',
+    id,
+    updates
   };
 };
 
@@ -53,3 +54,46 @@ export var addTodo = (todo) =>{
     todo
   };
 };
+
+export var startAddTodos = () =>{
+  return(dispatch,getState)=>{
+    var todosRef = firebaseRef.child('todos');
+    return todosRef.once('value').then((snapshot) =>{
+      var todos = snapshot.val() || {};
+      var parsedTodos = [];
+      Object.keys(todos).forEach((todoID)=>{
+        parsedTodos.push({
+          id:todoID,
+          ...todos[todoID]
+        });
+      });
+      dispatch(addTodos(parsedTodos));
+    });
+  }
+}
+
+export var startToggleTodo = (id,completed) =>{
+  return(dispatch,getState)=>{
+    var todoRef = firebaseRef.child(`todos/${id}`);
+    var updates = {
+      completed,
+      completedAt:completed ? moment().unix() : null 
+    };
+    return todoRef.update(updates).then(() =>{
+      dispatch(updateTodo(id,updates));
+    });
+  };
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
