@@ -9,7 +9,8 @@ module.exports =  {
   './app/app.jsx'
   ],
   externals:{
-    jquery: 'jQuery'
+    jquery: 'jQuery',
+    foundation: 'Foundation'
   },
   plugins:[
   new webpack.ProvidePlugin({
