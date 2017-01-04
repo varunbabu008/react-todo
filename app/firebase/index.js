@@ -1,21 +1,18 @@
 import firebase from 'firebase';
 
-try{
-
+try {
   var config = {
     apiKey: process.env.API_KEY,
     authDomain: process.env.AUTH_DOMAIN,
     databaseURL: process.env.DATABASE_URL,
     storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: "268323150651"
   };
+
   firebase.initializeApp(config);
+} catch (e) {
 
 }
-catch(e){
 
-}
 export var githubProvider = new firebase.auth.GithubAuthProvider();
 export var firebaseRef = firebase.database().ref();
-
 export default firebase;
